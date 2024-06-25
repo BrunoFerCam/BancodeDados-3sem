@@ -1,0 +1,22 @@
+Disciplina: Banco de Dados Não Relacional 
+ 
+Exercício 1 
+ 
+1. Modelagem de um Banco de Dados do Mercado Livre, contendo: Usuário, Vendedor, Produto, Favoritos e 
+Compras 
+a. Modelo Relacional 
+b. Modelo Não Relacional 
+c. Pontos fortes e fracos de cada tipo de banco para esse problema 
+ 
+2. Modelagem de um Banco de Dados da Biblioteca, contendo: Usuário, Livro, Autor, Empréstimo 
+a. Modelo Relacional 
+b. Modelo Não Relacional 
+c. Pontos fortes e fracos de cada tipo de banco para esse problema 
+ 
+ 
+ 
+ 
+ 
+ 
+PADRÃO DE ENTREGA: 
+NomeEX1_BDNR.pdf
