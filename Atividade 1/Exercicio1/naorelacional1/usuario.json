@@ -1,0 +1,14 @@
+{
+    "ID_Usuário": "1",
+    "Nome": "João Silva",
+    "Email": "joao@gmail.com",
+    "Senha": "senha123",
+    "Endereço": "Rua Oliva, 435",
+    "Favoritos": [
+        {"ID_Produto": "101", "Nome_Produto": "iPhone 12"},
+        {"ID_Produto": "102", "Nome_Produto": "Samsung Galaxy S21"}
+    ],
+    "Compras": [
+        {"ID_Compra": "1", "ID_Produto": "101", "Nome_Produto": "iPhone 12", "Quantidade": 2, "Data_Compra": "2024-06-25"}
+    ]
+}

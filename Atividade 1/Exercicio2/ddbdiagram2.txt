@@ -1,0 +1,28 @@
+Table Usuario {
+  ID_Usuario int [pk, increment]    
+  Nome varchar(100)                
+  Email varchar(100)               
+  Endereco varchar(255)             
+}
+
+Table Autor {
+  ID_Autor int [pk, increment]      
+  Nome varchar(100)                 
+}
+
+Table Livro {
+  ID_Livro int [pk, increment]      
+  Titulo varchar(255)              
+  ISBN varchar(20)                  
+  Ano_Publicacao int               
+  ID_Autor int [ref: > Autor.ID_Autor] 
+}
+
+Table Emprestimo {
+  ID_Emprestimo int [pk, increment] 
+  ID_Usuario int [ref: > Usuario.ID_Usuario] 
+  ID_Livro int [ref: > Livro.ID_Livro]      
+  Data_Emprestimo date             
+  Data_Devolucao date              
+}
+

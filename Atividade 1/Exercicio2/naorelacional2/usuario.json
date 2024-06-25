@@ -1,0 +1,38 @@
+{
+    "ID_Usuario": "1",
+    "Nome": "Carlos Pereira",
+    "Email": "carlosthepereira@gmail.com",
+    "Endereco": "Rua Pequeno Focinho, 402",
+    "Emprestimos": [
+        {
+            "ID_Emprestimo": "1",
+            "Livro": {
+                "ID_Livro": "1001",
+                "Titulo": "Memórias Póstumas de Brás Cubas",
+                "ISBN": "978-3-16-148410-0",
+                "Ano_Publicacao": 1881,
+                "Autor": {
+                    "ID_Autor": "1",
+                    "Nome": "Machado de Assis"
+                        }
+            },
+            "Data_Emprestimo": "2024-06-01",
+            "Data_Devolucao": "2024-06-10"
+        },
+        {
+            "ID_Emprestimo": "2",
+            "Livro": {
+                "ID_Livro": "1003",
+                "Titulo": "Alguma Poesia",
+                "ISBN": "978-3-16-146798-1",
+                "Ano_Publicacao": 1930,
+                "Autor": {
+                    "ID_Autor": "2",
+                    "Nome": "Carlos Drummond de Andrade"
+                        }
+            },
+            "Data_Emprestimo": "2024-06-15",
+            "Data_Devolucao": "2024-06-25"
+        }
+    ]
+}

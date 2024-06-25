@@ -1,0 +1,38 @@
+Table Usuario {
+  ID_Usuario int [pk, increment]
+  Nome varchar(100)
+  Email varchar(100)
+  Senha varchar(100)
+  Endereco varchar(255)
+}
+
+Table Vendedor {
+  ID_Vendedor int [pk, increment]
+  Nome varchar(100)
+  Email varchar(100)
+  Senha varchar(100)
+  Endereco varchar(255)
+}
+
+Table Produto {
+  ID_Produto int [pk, increment]
+  Nome varchar(100)
+  Descricao text
+  Preco decimal
+  Quantidade int
+  ID_Vendedor int [ref: > Vendedor.ID_Vendedor]
+}
+
+Table Favoritos {
+  ID_Favorito int [pk, increment]
+  ID_Usuario int [ref: > Usuario.ID_Usuario]
+  ID_Produto int [ref: > Produto.ID_Produto]
+}
+
+Table Compras {
+  ID_Compra int [pk, increment]
+  ID_Usuario int [ref: > Usuario.ID_Usuario]
+  ID_Produto int [ref: > Produto.ID_Produto]
+  Quantidade int
+  Data_Compra date
+}

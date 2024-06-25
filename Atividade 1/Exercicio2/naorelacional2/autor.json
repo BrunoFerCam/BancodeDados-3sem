@@ -1,0 +1,20 @@
+{
+    "Autores": [
+        {
+            "ID_Autor": "1",
+            "Nome": "Machado de Assis",
+            "Livros": [
+        {"ID_Livro": "1001", "Título": "Memórias Póstumas de Brás Cubas"},
+        {"ID_Livro": "1002", "Título": "Dom Casmurro"}
+    ]
+        },
+        {
+            "ID_Autor": "2",
+            "Nome": "Carlos Drummond de Andrade",
+            "Livros": [
+        {"ID_Livro": "1003", "Título": "Alguma Poesia"},
+        {"ID_Livro": "1004", "Título": "A Rosa do Povo"}
+    ]
+        }
+    ]
+}

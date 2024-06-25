@@ -1,0 +1,13 @@
+{
+    "ID_Vendedor": "1",
+    "Nome": "Maria Souza",
+    "Email": "maria@gmail.com",
+    "Senha": "tito1108",
+    "Endereço": "Avenida dos Camelos, 087",
+    "Produtos": [
+        {"ID_Produto": "101", "Nome": "iPhone 12", "Descrição": "Um celular custoso, mas extremamente poderoso!", "Preço": 5000, "Quantidade": 50},
+        {"ID_Produto": "102", "Nome": "Samsung Galaxy S21", "Descrição": "Um ótimo negócio por seu preço!", "Preço": 2500, "Quantidade": 30},
+        {"ID_Produto": "103", "Nome": "Google Pixel 6", "Descrição": "Um smartphone com uma câmera incrível!", "Preço": 3000, "Quantidade": 20},
+        {"ID_Produto": "104", "Nome": "OnePlus 9 Pro", "Descrição": "Um dispositivo poderoso com uma interface limpa!", "Preço": 4000, "Quantidade": 15}
+    ]
+}

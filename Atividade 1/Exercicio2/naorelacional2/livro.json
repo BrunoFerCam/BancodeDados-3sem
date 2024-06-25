@@ -1,0 +1,44 @@
+{
+    "Livros": [
+        {
+            "ID_Livro": "1001",
+            "Titulo": "Memórias Póstumas de Brás Cubas",
+            "ISBN": "978-3-16-148410-0",
+            "Ano_Publicacao": 1881,
+            "Autor": {
+                "ID_Autor": "1",
+                "Nome": "Machado de Assis"
+            }
+        },
+        {
+            "ID_Livro": "1002",
+            "Titulo": "Dom Casmurro",
+            "ISBN": "978-3-16-148411-7",
+            "Ano_Publicacao": 1899,
+            "Autor": {
+                "ID_Autor": "1",
+                "Nome": "Machado de Assis"
+            }
+        },
+        {
+            "ID_Livro": "1003",
+            "Titulo": "Alguma Poesia",
+            "ISBN": "978-3-16-146798-1",
+            "Ano_Publicacao": 1930,
+            "Autor": {
+                "ID_Autor": "2",
+                "Nome": "Carlos Drummond de Andrade"
+            }
+        },
+        {
+            "ID_Livro": "1004",
+            "Titulo": "A Rosa do Povo",
+            "ISBN": "978-3-16-14512-6",
+            "Ano_Publicacao": 1945,
+            "Autor": {
+                "ID_Autor": "2",
+                "Nome": "Carlos Drummond de Andrade"
+            }
+        }
+    ]
+}
