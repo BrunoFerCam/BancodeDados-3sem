@@ -1,0 +1,15 @@
+Disciplina: Banco de Dados Não Relacional
+Exercício 2
+Crie uma conta gratuita no MongoDB https://www.mongodb.com/online
+1. Implemente em Python as funções de manipulação da Base de Dados Não Relacional do Mercado Livre
+(EX1) criado no MongoDB
+a. Insert em todas as coleções
+b. Update em todas as coleções
+c. Search em todas as coleções
+d. Delete em todas as coleções
+
+
+
+
+PADRÃO DE ENTREGA:
+NomeEX2_BDNR.pdf
