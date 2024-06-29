@@ -3,7 +3,6 @@ Table Usuario {
   Nome varchar(100)
   Email varchar(100)
   Senha varchar(100)
-  Endereco varchar(255)
 }
 
 Table Vendedor {
@@ -11,7 +10,6 @@ Table Vendedor {
   Nome varchar(100)
   Email varchar(100)
   Senha varchar(100)
-  Endereco varchar(255)
 }
 
 Table Produto {
@@ -35,4 +33,28 @@ Table Compras {
   ID_Produto int [ref: > Produto.ID_Produto]
   Quantidade int
   Data_Compra date
+}
+
+Table Endereco_Usuario {
+  ID_Endereco int [pk, increment]
+  Rua varchar(255)
+  Numero varchar(10)
+  Complemento varchar(100)
+  Bairro varchar(100)
+  Cidade varchar(100)
+  Estado varchar(100)
+  CEP varchar(20)
+  ID_Usuario int [ref: > Usuario.ID_Usuario]
+}
+
+Table Endereco_Vendedor {
+  ID_Endereco int [pk, increment]
+  Rua varchar(255)
+  Numero varchar(10)
+  Complemento varchar(100)
+  Bairro varchar(100)
+  Cidade varchar(100)
+  Estado varchar(100)
+  CEP varchar(20)
+  ID_Vendedor int [ref: > Vendedor.ID_Vendedor]
 }

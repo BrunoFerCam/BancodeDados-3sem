@@ -26,3 +26,9 @@ Table Emprestimo {
   Data_Devolucao date              
 }
 
+Table Telefone {
+  ID_Telefone int [pk, increment]
+  Numero varchar(20)
+  Tipo varchar(50)
+  ID_Usuario int [ref: > Usuario.ID_Usuario]
+}
