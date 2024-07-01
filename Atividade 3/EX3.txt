@@ -1,0 +1,22 @@
+Exercício 3
+
+https://dontpad.com/diogobranquinho/bdnr/redis/redis-objeto
+
+Crie uma conta gratuita no Redis http://redis.com/
+Implemente em Python a retirada de 3 itens do Projeto Mercado Livre armazenado no MongoDB para o Redis
+a) Retirar do MongoDB e colocar no Redis
+b) Manipular os itens no Redis
+c) Devolver os itens para o MongoDB
+Dos 3 itens, 1 item pode ser uma nova implementação
+python -m pip install redis
+------------------------------------------------------------------
+import redis
+conR = redis.Redis(host='redis-10339.c245.us-east-1-3.ec2.cloud.redislabs.com',
+ port=10339,
+ password='123456')
+conR.set('user:name','vinicius')
+print(conR.get('user:name'))
+
+------------------------------------------------------------------
+PADRÃO DE ENTREGA:
+NomeEX3_BDNR.pd
