@@ -283,6 +283,7 @@ def read_compras_por_usuario(nome_usuario):
 def main():
     key = ''
     while key != 'S':
+        print("\nMenu Principal")
         print("1-CRUD Usuário")
         print("2-CRUD Vendedor")
         print("3-CRUD Produto")
