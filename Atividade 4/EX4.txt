@@ -1,0 +1,14 @@
+Exercício 4
+
+Crie uma conta gratuita no Cassandra https://auth.cloud.datastax.com/
+
+1. Implemente em Python as funções de manipulação da Base de Dados Não Relacional do Mercado Livre 
+(EX1) no Cassandra
+a. Insert em todas as coleções (Usuário, Vendedor, Produto, Compra)
+b. Update em Usuário
+c. Search em Produto
+d. Delete em Compra
+
+
+PADRÃO DE ENTREGA:
+NomeEX4_BDNR.pd
