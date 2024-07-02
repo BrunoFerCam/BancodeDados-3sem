@@ -5,20 +5,20 @@ import secrets
 from datetime import datetime
 from bson import ObjectId 
 
-conR = redis.Redis(host="redis-12390.c11.us-east-1-2.ec2.cloud.redislabs.com",
-                   port=12390,
-                   password="FkhYVcHDAmhY417QVYC0qORwjNCS3zD2")
-conR.set("user_MiguelC","MiguelC")
+conR = redis.Redis(host='redis-16476.c44.us-east-1-2.ec2.redns.redis-cloud.com',
+                   port=16476,
+                   password="sMgmFFmxPDpa789K2rEClugvRp58dulj")
+conR.set("user_brunoFC","brunoFC")
 
-client = pymongo.MongoClient("mongodb+srv://root:fatec@teste.kfaa4qw.mongodb.net/?retryWrites=true&w=majority")
+client = pymongo.MongoClient("mongodb+srv://brunofernandescampos:FJwbzZ2dq5I22HIH@cluster0.09dtabz.mongodb.net/")
 global mydb
-mydb = client.Mercado_Livre
+mydb = client.mercadolivre
 
-######################FORNECEDOR#######################
-def insertFornecedor():
-    mycol = mydb.fornecedor
-    print("Iniciando a inserção do fornecedor\n")
-    print("\n#### Insert Fornecedor ####")
+######################Vendedor#######################
+def insertVendedor():
+    mycol = mydb.Vendedor
+    print("Iniciando a inserção do Vendedor\n")
+    print("\n#### Insert Vendedor ####")
     nome = input("Nome: ")
     email = input("Email: ")
     senha = input("Senha: ")
@@ -46,24 +46,24 @@ def insertFornecedor():
 
     mydict = {"nome": nome, "email": email, "senha": senha, "endereco": [endereco], "telefone": [telefone], "data_criacao": data_criacao}
     inserir = mycol.insert_one(mydict)
-    fornecedor_id = inserir.inserted_id
+    Vendedor_id = inserir.inserted_id
 
-    endereco["_id_fornecedor"] = fornecedor_id
-    telefone["_id_fornecedor"] = fornecedor_id
-    mycol.update_one({"_id": fornecedor_id}, {"$set": {"endereco": [endereco], "telefone": [telefone]}})
+    endereco["_id_Vendedor"] = Vendedor_id
+    telefone["_id_Vendedor"] = Vendedor_id
+    mycol.update_one({"_id": Vendedor_id}, {"$set": {"endereco": [endereco], "telefone": [telefone]}})
 
 
-def findFornecedor():
-    mycol = mydb.fornecedor
-    print("Iniciando a busca de fornecedores\n")
-    print("#### Listagem de Fornecedores ####")
-    fornecedores = mycol.find()
-    for fornecedor in fornecedores:
-        print(f"ID: {fornecedor['_id']}")
-        print(f"Nome: {fornecedor['nome']}")
-        print(f"Email: {fornecedor['email']}")
+def findVendedor():
+    mycol = mydb.Vendedor
+    print("Iniciando a busca de Vendedores\n")
+    print("#### Listagem de Vendedores ####")
+    Vendedores = mycol.find()
+    for Vendedor in Vendedores:
+        print(f"ID: {Vendedor['_id']}")
+        print(f"Nome: {Vendedor['nome']}")
+        print(f"Email: {Vendedor['email']}")
         print("Endereço:")
-        for endereco in fornecedor['endereco']:
+        for endereco in Vendedor['endereco']:
             print(f"  Logradouro: {endereco['logradouro']}")
             print(f"  Número: {endereco['numero']}")
             print(f"  Complemento: {endereco['complemento']}")
@@ -73,35 +73,35 @@ def findFornecedor():
             print(f"  CEP: {endereco['cep']}")
 
         print("Telefone:")
-        for telefone in fornecedor['telefone']:
+        for telefone in Vendedor['telefone']:
             print(f"  Tipo: {telefone.get('tipo', 'N/A')}")
             print(f"  Número: {telefone.get('numero', 'N/A')}")
         print()
 
 
-def updateFornecedor(): 
-    mycol = mydb.fornecedor
+def updateVendedor(): 
+    mycol = mydb.Vendedor
 
-    id_fornecedor = input("Digite o ID do fornecedor que deseja atualizar: ")
+    id_Vendedor = input("Digite o ID do Vendedor que deseja atualizar: ")
 
     try:
-        id_fornecedor = ObjectId(id_fornecedor)
+        id_Vendedor = ObjectId(id_Vendedor)
     except Exception as e:
         print("Erro ao converter ID:", e)
         return
 
-    fornecedor_existente = mycol.find_one({"_id": id_fornecedor})
-    if fornecedor_existente:
-        print("Fornecedor encontrado. Por favor, insira as novas informações.")
+    Vendedor_existente = mycol.find_one({"_id": id_Vendedor})
+    if Vendedor_existente:
+        print("Vendedor encontrado. Por favor, insira as novas informações.")
     else:
-        print("Fornecedor não encontrado.")
+        print("Vendedor não encontrado.")
         return
     
-    nome = fornecedor_existente.get('nome')
-    email = fornecedor_existente.get('email')
-    senha = fornecedor_existente.get('senha')
+    nome = Vendedor_existente.get('nome')
+    email = Vendedor_existente.get('email')
+    senha = Vendedor_existente.get('senha')
 
-    print("\nAtualizando informações do fornecedor\n")
+    print("\nAtualizando informações do Vendedor\n")
     while True:
         pergunta = input("Deseja atulizar seus dados? (S/N) ").upper()
         while pergunta not in ["S", "N", "SIM", "NAO", "NÃO"]:
@@ -115,8 +115,8 @@ def updateFornecedor():
         elif pergunta in ["N", "NAO", "NÃO"]:
             break
 
-    endereco_atualizado = fornecedor_existente.get('endereco', {} )
-    telefone_atualizado = fornecedor_existente.get('telefone', {})
+    endereco_atualizado = Vendedor_existente.get('endereco', {} )
+    telefone_atualizado = Vendedor_existente.get('telefone', {})
 
     while True:
         resposta = input("Deseja Atualizar Endereço? (S/N) ").upper()
@@ -197,18 +197,18 @@ def updateFornecedor():
             "telefone": telefone_atualizado
         }
     }
-    mycol.update_one({"_id": id_fornecedor}, atualizacao)
-    print("Fornecedor atualizado com sucesso")
+    mycol.update_one({"_id": id_Vendedor}, atualizacao)
+    print("Vendedor atualizado com sucesso")
 
 
-def deleteFornecedor():
-    mycol = mydb.fornecedor
-    id_fornecedor = input("Qual o id do fornecedor que deseja excluir?: ")
-    fornecedor_existente = mycol.delete_one({"_id": ObjectId(id_fornecedor)})
-    if fornecedor_existente:
-        print("Fornecedor excluído com sucesso")
+def deleteVendedor():
+    mycol = mydb.Vendedor
+    id_Vendedor = input("Qual o id do Vendedor que deseja excluir?: ")
+    Vendedor_existente = mycol.delete_one({"_id": ObjectId(id_Vendedor)})
+    if Vendedor_existente:
+        print("Vendedor excluído com sucesso")
     else:
-        print("Fornecedor não encontrado")
+        print("Vendedor não encontrado")
 
 
 ######################USUARIO#######################
@@ -412,7 +412,7 @@ def deleteUsuario():
 ######################PRODUTO#######################
 def insertProduto():
     mycol_produto = mydb.produto
-    mycol_fornecedor = mydb.fornecedor
+    mycol_Vendedor = mydb.Vendedor
     
     print("Iniciando a inserção do produto\n")
     print("\n#### Inserir Produto ####")
@@ -425,16 +425,16 @@ def insertProduto():
     imagem = input("URL da Imagem do Produto: ")
     data_criacao = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     
-    fornecedor_id = input("ID do Fornecedor Associado: ")
+    Vendedor_id = input("ID do Vendedor Associado: ")
     
-    fornecedor_existente = mycol_fornecedor.find_one({"_id": ObjectId(fornecedor_id)})
-    if not ObjectId.is_valid(fornecedor_id):
-        print("ID inválido. verifique o ID do fornecedor e tente novamente.")
+    Vendedor_existente = mycol_Vendedor.find_one({"_id": ObjectId(Vendedor_id)})
+    if not ObjectId.is_valid(Vendedor_id):
+        print("ID inválido. verifique o ID do Vendedor e tente novamente.")
         return
 
-    if not fornecedor_existente:
-        print(f"Fornecedor com ID {fornecedor_id} não encontrado.")
-        print("Por favor, verifique o ID do fornecedor e tente novamente.")
+    if not Vendedor_existente:
+        print(f"Vendedor com ID {Vendedor_id} não encontrado.")
+        print("Por favor, verifique o ID do Vendedor e tente novamente.")
         return
     
     produto_dict = {
@@ -446,13 +446,13 @@ def insertProduto():
         "categoria": categoria,
         "imagem": imagem,
         "data_criacao": data_criacao,
-        "fornecedor_id": ObjectId(fornecedor_id)
+        "Vendedor_id": ObjectId(Vendedor_id)
     }
     
     inserir = mycol_produto.insert_one(produto_dict)
     
-    mycol_fornecedor.update_one(
-        {"_id": ObjectId(fornecedor_id)},
+    mycol_Vendedor.update_one(
+        {"_id": ObjectId(Vendedor_id)},
         {"$addToSet": {"produtos": str(inserir.inserted_id)}}
     )
     
@@ -474,7 +474,7 @@ def findProduto():
         print(f"Marca: {produtos['marca']}")
         print(f"Imagem: {produtos['imagem']}")
         print(f"Data de Criação: {produtos['data_criacao']}")
-        print(f"ID do fornecedor: {produtos['fornecedor_id']}")
+        print(f"ID do Vendedor: {produtos['Vendedor_id']}")
         print()
 
 
@@ -745,7 +745,7 @@ def realizarCompra():
         
         produtos_compra.append({
             "produto_id": ObjectId(id_produto),
-            "fornecedor_id": produto_existente['fornecedor_id'],
+            "Vendedor_id": produto_existente['Vendedor_id'],
             "quantidade": quantidade,
             "valor_produto": valor_produto
         })
@@ -988,22 +988,27 @@ def menu():
     loop = True
     while loop:
         print("""
+            --------Usuario--------\n
             1 - Novo Usuario \n
-            2 - Novo Fornecedor \n 
-            3 - Novo Produto \n
-            4 - Novo Favorito \n
-            5 - Encontrar Usuario \n
-            6 - Encontrar Fornecedor \n
-            7 - Encontrar Produto \n
-            8- Encontrar Favorito \n
-            9 - Atualizar Usuario \n
-            10 - Atualizar Fornecedor \n
+            2 - Encontrar Usuario \n
+            3 - Atualizar Usuario \n
+            4 - Deletar Usuario \n
+            --------Vendedor--------\n
+            5 - Novo Vendedor \n
+            6 - Encontrar Vendedor \n
+            7 - Atualizar Vendedor \n
+            8 - Deletar Vendedor \n
+            --------Produto--------\n
+            9 - Novo Produto \n
+            10 - Encontrar Produto \n
             11 - Atualizar Produto \n
-            12 - Atualizar Favorito \n
-            13 - Deletar Usuario \n
-            14 - Deletar Fornecedor \n
-            15 - Deletar Produto \n
+            12 - Deletar Produto \n
+            --------Favorito--------\n
+            13 - Novo Favorito \n
+            14 - Encontrar Favorito \n
+            15 - Atualizar Favorito \n
             16 - Deletar Favorito \n
+            --------Compras--------\n
             17 - Realizar Compra \n
             18 - Listar Compras por Usuário \n
             --------------Redis--------------\n
@@ -1024,33 +1029,33 @@ def menu():
             case "1":
                 insertUsuario()
             case "2":
-               insertFornecedor()
-            case "3":
-                insertProduto()
-            case "4":
-                insertFavorito()
-            case "5":
                 findUsuario()
-            case "6":
-                findFornecedor()
-            case "7":
-                findProduto()
-            case "8":
-                findFavorito()
-            case "9":
+            case "3":
                 updateUsuario()
+            case "4":
+                deleteUsuario()
+            case "5":
+                insertVendedor()
+            case "6":
+                findVendedor()
+            case "7":
+                updateVendedor()
+            case "8":
+                deleteVendedor()
+            case "9":
+                insertProduto()
             case "10":
-                updateFornecedor()
+                findProduto()
             case "11":
                 updateProduto()
             case "12":
-                updateFavorito()
-            case "13":
-                deleteUsuario()
-            case "14":
-                deleteFornecedor()
-            case "15":
                 deleteProduto()
+            case "13":
+                insertFavorito()
+            case "14":
+                findFavorito()
+            case "15":
+                updateFavorito()
             case "16":
                 deleteFavorito()
             case "17":
