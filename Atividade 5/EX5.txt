@@ -1,0 +1,14 @@
+Exercício 5
+
+Crie uma conta gratuita no Neo4j https://neo4j.com AuraDB
+https://towardsdatascience.com/neo4j-cypher-python-7a919a372be7
+
+1. Implemente em Python as funções de manipulação da Base de Dados Não Relacional do Mercado Livre 
+(EX1) no Neo4j
+a. Insert em todas as coleções (Usuário, Vendedor, Produto, Compra)
+b. Search em todas as coleções
+
+
+
+PADRÃO DE ENTREGA:
+NomeEX5_BDNR.pd
