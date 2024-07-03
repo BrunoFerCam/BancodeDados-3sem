@@ -1,7 +1,6 @@
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 
-# Configurações de conexão com o MongoDB
 def get_db():
     uri = "mongodb+srv://brunofernandescampos:FJwbzZ2dq5I22HIH@cluster0.09dtabz.mongodb.net/"
     client = MongoClient(uri, server_api=ServerApi('1'))
@@ -9,7 +8,6 @@ def get_db():
 
 db = get_db()
 
-# CRUD Usuários
 def create_usuario():
     mycol = db.usuario
     nome = input("Nome: ")
@@ -68,7 +66,6 @@ def delete_usuario(nome, sobrenome):
     resultado = mycol.delete_one(query)
     print(f"{resultado.deleted_count} usuário(s) deletado(s).")
 
-# CRUD Vendedores
 def create_vendedor():
     mycol = db.vendedor
     nome = input("Nome: ")
@@ -127,7 +124,6 @@ def delete_vendedor(nome, sobrenome):
     resultado = mycol.delete_one(query)
     print(f"{resultado.deleted_count} vendedor(es) deletado(s).")
 
-# CRUD Produtos
 def create_produto():
     mycol = db.produto
     nome = input("Nome: ")
@@ -173,7 +169,6 @@ def delete_produto(nome):
     resultado = mycol.delete_one(query)
     print(f"{resultado.deleted_count} produto(s) deletado(s).")
 
-# CRUD Favoritos
 def create_favorito():
     mycol = db.favorito
     nome_usuario = input("Nome do Usuário: ")
@@ -214,7 +209,6 @@ def delete_favorito(nome_usuario, nome_produto):
     resultado = mycol.delete_one(query)
     print(f"{resultado.deleted_count} favorito(s) deletado(s).")
 
-# CRUD Compras
 def create_compra():
     mycol = db.compra
     nome_usuario = input("Nome do Usuário: ")
@@ -256,7 +250,6 @@ def delete_compra(nome_usuario, nome_produto):
     resultado = mycol.delete_one(query)
     print(f"{resultado.deleted_count} compra(s) deletada(s).")
 
-# Menu Principal
 def main():
     while True:
         print("\nMenu Principal")
