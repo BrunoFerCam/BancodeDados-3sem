@@ -2,12 +2,14 @@ import json
 import redis
 import pymongo
 import secrets
-from datetime import datetime
 from bson import ObjectId 
+from pymongo.mongo_client import MongoClient
+
+# Send a ping to confirm a successful connection
 
 conR = redis.Redis(host='redis-16476.c44.us-east-1-2.ec2.redns.redis-cloud.com',
-                   port=16476,
-                   password="sMgmFFmxPDpa789K2rEClugvRp58dulj")
+                  port=16476,
+                  password='sMgmFFmxPDpa789K2rEClugvRp58dulj')
 conR.set("user_brunoFC","brunoFC")
 
 client = pymongo.MongoClient("mongodb+srv://brunofernandescampos:FJwbzZ2dq5I22HIH@cluster0.09dtabz.mongodb.net/")
@@ -42,9 +44,9 @@ def insertVendedor():
     
     telefone = {"tipo": tipo, "numero": numero}
     
-    data_criacao = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    
 
-    mydict = {"nome": nome, "email": email, "senha": senha, "endereco": [endereco], "telefone": [telefone], "data_criacao": data_criacao}
+    mydict = {"nome": nome, "email": email, "senha": senha, "endereco": [endereco], "telefone": [telefone]}
     inserir = mycol.insert_one(mydict)
     Vendedor_id = inserir.inserted_id
 
@@ -239,9 +241,8 @@ def insertUsuario():
     
     telefone = {"tipo": tipo, "numero": numero}
     
-    data_criacao = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
-    mydict = {"nome": nome, "email": email, "senha": senha, "endereco": [endereco], "telefone": [telefone], "data_criacao": data_criacao}
+    mydict = {"nome": nome, "email": email, "senha": senha, "endereco": [endereco], "telefone": [telefone]}
     inserir = mycol.insert_one(mydict)
     usuario_id = inserir.inserted_id
 
@@ -258,15 +259,16 @@ def findUsuario():
     for usuario in usuarios:
         print(f"ID: {usuario['_id']}")
         print(f"Nome: {usuario['nome']}")
-        print(f"Email: {usuario['email']}")
-        print(f"Senha: {usuario['senha']}")
+        print(f"Email: {usuario.get('email', 'No email provided')}")
+        # Use .get() for 'senha' with a default value
+        print(f"Senha: {usuario.get('senha', 'No password provided')}")
         print("Endereço:")
-        for endereco in usuario['endereco']:
-            print(f"  Logradouro: {endereco['logradouro']}")
-            print(f"  Número: {endereco['numero']}")
-            print(f"  Complemento: {endereco['complemento']}")
-            print(f"  Bairro: {endereco['bairro']}")
-            print(f"  Cidade: {endereco['cidade']}")
+        for endereco in usuario.get('endereco', []):  # Also safeguard against missing 'endereco'
+            print(f"  Logradouro: {endereco.get('logradouro', 'No logradouro provided')}")
+            print(f"  Número: {endereco.get('numero', 'No number provided')}")
+            print(f"  Complemento: {endereco.get('complemento', 'No complement provided')}")
+            print(f"  Bairro: {endereco.get('bairro', 'No bairro provided')}")
+            print(f"  Cidade: {endereco.get('cidade', 'No city provided')}")
             print(f"  Estado: {endereco['estado']}")
             print(f"  CEP: {endereco['cep']}")
 
@@ -423,7 +425,6 @@ def insertProduto():
     marca = input("Marca do Produto: ")
     categoria = input("Categoria do Produto: ")
     imagem = input("URL da Imagem do Produto: ")
-    data_criacao = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     
     Vendedor_id = input("ID do Vendedor Associado: ")
     
@@ -445,7 +446,6 @@ def insertProduto():
         "marca": marca,
         "categoria": categoria,
         "imagem": imagem,
-        "data_criacao": data_criacao,
         "Vendedor_id": ObjectId(Vendedor_id)
     }
     
@@ -473,7 +473,6 @@ def findProduto():
         print(f"Categoria: {produtos['categoria']}")
         print(f"Marca: {produtos['marca']}")
         print(f"Imagem: {produtos['imagem']}")
-        print(f"Data de Criação: {produtos['data_criacao']}")
         print(f"ID do Vendedor: {produtos['Vendedor_id']}")
         print()
 
@@ -580,7 +579,6 @@ def insertFavorito():
     favoritos_dict = {
         "usuario_id": ObjectId(usuario_id),
         "produto_id": ObjectId(produto_id),
-        "data_criacao": datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     }
     
     mycol_favoritos.insert_one(favoritos_dict)
@@ -618,7 +616,6 @@ def findFavorito():
             print(f"Erro ao converter ID do produto: {e}")
             continue
         
-        data_criacao = favorito['data_criacao']
 
         produto = mycol_produto.find_one({"_id": id_produto})
         if not produto:
@@ -635,7 +632,6 @@ def findFavorito():
         print(f"Nome do Produto: {nome_produto}")
         print(f"Preço do Produto: {preco_produto}")
         print(f"Imagem do Produto: {imagem_produto}")
-        print(f"Data de Criação: {data_criacao}")
         print()
 
 
@@ -672,7 +668,6 @@ def updateFavorito():
     favorito_dict = {
         "usuario_id": ObjectId(usuario_id),
         "produto_id": ObjectId(produto_id),
-        "data_criacao": datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     }
     
     mycol_favoritos.insert_one(favorito_dict)
@@ -741,7 +736,7 @@ def realizarCompra():
             continue
         
         valor_produto = produto_existente['preco'] * quantidade
-        valor_total += valor_produto
+        valor_total += float(valor_produto)
         
         produtos_compra.append({
             "produto_id": ObjectId(id_produto),
@@ -763,13 +758,11 @@ def realizarCompra():
         print("Forma de pagamento inválida. Escolha entre PIX ou Cartão de Crédito.")
         forma_pagamento = input("Forma de pagamento (PIX ou Cartão de Crédito): ").lower()
     
-    data_pagamento = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     pagamento_dict = {
         "usuario_id": ObjectId(id_usuario),
         "produtos": produtos_compra,
         "valor_total": valor_total,
         "forma_pagamento": forma_pagamento,
-        "data_pagamento": data_pagamento
     }
     mycol_compras.insert_one(pagamento_dict)
     
@@ -798,14 +791,14 @@ def listarComprasUsuario():
     
     for compra in compras_usuario:
         print(f"ID da Compra: {compra['_id']}")
-        print(f"Data da Compra: {compra['data_pagamento']}")
         print(f"Forma de Pagamento: {compra['forma_pagamento']}")
         print("Produtos:")
         for produto in compra['produtos']:
             produto_info = mycol_produto.find_one({"_id": produto['produto_id']})
             print(f"  - Nome: {produto_info['nome']}")
             print(f"    Quantidade: {produto['quantidade']}")
-            print(f"    Valor: R${produto['valor_produto']:.2f}")
+            valor_produto_float = float(produto['valor_produto'])  # Convert to float
+            print(f"    Valor: R${valor_produto_float:.2f}")
         print()
 
 
@@ -1020,63 +1013,60 @@ def menu():
             22 - Mover Usuario Para o Redis \n
             23 - Manipular Usuario no Redis \n
             24 - Mover Usuario do Redis para o MongoDB \n
-              -----------Login-----------\n
-            25 - Logar Usuário \n
             0 - Sair \n
         """)
         escolha = input("Digite a Operação desejada: ")
-        match escolha:
-            case "1":
-                insertUsuario()
-            case "2":
-                findUsuario()
-            case "3":
-                updateUsuario()
-            case "4":
-                deleteUsuario()
-            case "5":
-                insertVendedor()
-            case "6":
-                findVendedor()
-            case "7":
-                updateVendedor()
-            case "8":
-                deleteVendedor()
-            case "9":
-                insertProduto()
-            case "10":
-                findProduto()
-            case "11":
-                updateProduto()
-            case "12":
-                deleteProduto()
-            case "13":
-                insertFavorito()
-            case "14":
-                findFavorito()
-            case "15":
-                updateFavorito()
-            case "16":
-                deleteFavorito()
-            case "17":
-                realizarCompra()
-            case "18":
-                listarComprasUsuario()
-            case "19":
-                moverProdutoRedis()
-            case "20":
-                manipularProdutoRedis()
-            case "21":
-                moverProdutoMongoDB()
-            case "22":
-                moverUsuarioRedis()
-            case "23":
-                manipularUsuarioRedis()
-            case "24":
-                moverUsuarioMongoDB()
-            case "25":
-                loginUsuario()
-            case "0":
-                print("Saindo...")
-                loop = False
+        if escolha == "1":
+            insertUsuario()
+        elif escolha == "2":
+            findUsuario()
+        elif escolha == "3":
+            updateUsuario()
+        elif escolha == "4":
+            deleteUsuario()
+        elif escolha == "5":
+            insertVendedor()
+        elif escolha == "6":
+            findVendedor()
+        elif escolha == "7":
+            updateVendedor()
+        elif escolha == "8":
+            deleteVendedor()
+        elif escolha == "9":
+            insertProduto()
+        elif escolha == "10":
+            findProduto()
+        elif escolha == "11":
+            updateProduto()
+        elif escolha == "12":
+            deleteProduto()
+        elif escolha == "13":
+            insertFavorito()
+        elif escolha == "14":
+            findFavorito()
+        elif escolha == "15":
+            updateFavorito()
+        elif escolha == "16":
+            deleteFavorito()
+        elif escolha == "17":
+            realizarCompra()
+        elif escolha == "18":
+            listarComprasUsuario()
+        elif escolha == "19":
+            moverProdutoRedis()
+        elif escolha == "20":
+            manipularProdutoRedis()
+        elif escolha == "21":
+            moverProdutoMongoDB()
+        elif escolha == "22":
+            moverUsuarioRedis()
+        elif escolha == "23":
+            manipularUsuarioRedis()
+        elif escolha == "24":
+            moverUsuarioMongoDB()
+        elif escolha == "25":
+            loginUsuario()
+        elif escolha == "0":
+            print("Saindo...")
+            loop = False
 menu()

@@ -1,2 +1,7 @@
 # Virtual environment folder
 myenv/
+env_name/
+node_modules/
+teste/
+package-lock.json
+package.json
